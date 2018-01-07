@@ -7,11 +7,17 @@
 #include <iostream>
 #include "Board.h"
 using namespace std;
+#define MINSIZE 4
+#define MAXSIZE 20
 // constructor. put initial board status on matrix.
 //parameters-p1, p2 are player 1 and 2 names.
 Board :: Board(char p1, char p2) {
-    cout << "Enter board size." << endl;
+    cout << "Enter board size between " << MINSIZE << " to " << MAXSIZE << endl;
     cin >> size;
+    while(size < MINSIZE || size > MAXSIZE) { //check if input size is allowed.
+        cout << "Wrong input Enter board size between " << MINSIZE << " to " << MAXSIZE << endl;
+        cin >> size;
+    }
     // row and col 0 are for the board numbers.
     size = size + 1;
     // memory allocation for board matrix.
@@ -38,7 +44,7 @@ Board :: Board(char p1, char p2) {
     board[size / 2][size / 2 + 1] = p2;
     board[size / 2 + 1][size / 2] = p2;
 }
-//destructor for board-delete metrix from memory heap.
+//destructor for board-delete matrix from memory heap.
 Board :: ~Board() {
     for (int i = 0; i < size; i++) {
         delete board[i];
@@ -50,12 +56,19 @@ void Board :: printBoard() {
     int j;
     for (int i = 0; i < size; i++) {
         for (j = 0; j < size; j++) {
+            if(i == 0 && j== 20 || i == 20 && j == 0) {
+                cout << "2";
+            } else if(i == 0 && j > 9 || j == 0 && i > 9) {
+                cout << "1";
+            } else {
+                cout << " ";
+            }
             cout << board[i][j];
             cout << " | ";
         }
         cout << "" <<endl;
         for (j = 0; j < size; j++) {
-            cout << "----";
+            cout << "-----";
         }
         cout << "" << endl;
     }
