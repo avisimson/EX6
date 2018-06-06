@@ -1,18 +1,11 @@
-#AviSimson205789100
-a.out: Board.o main.o Game.o Player.o ReversiGame.o
-	g++ main.o Board.o Game.o Player.o ReversiGame.o
+a.out: main.o threadPool.o osqueue.o
+	gcc -o a.out main.o threadPool.o osqueue.o -pthread
 
-Board.o: Board.cpp Board.h
-	g++ -c Board.cpp
+main.o: main.c threadPool.h
+	gcc -c -o main.o main.c -pthread
 
-Game.o: Game.cpp Game.h Board.h ReversiGame.h GameType.h
-	g++ -c Game.cpp
+threadPool.o: threadPool.c threadPool.h
+	gcc -c -o threadPool.o threadPool.c -pthread
 
-main.o: main.cpp Game.h
-	g++ -c main.cpp
-
-Player.o: Player.cpp Player.h
-	g++ -c Player.cpp
-
-ReversiGame.o: ReversiGame.cpp ReversiGame.h Board.h Player.h GameType.h
-	g++ -c ReversiGame.cpp
+osqueue.o: osqueue.c osqueue.h
+	gcc -c -o osqueue.o osqueue.c
